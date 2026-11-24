@@ -1,38 +1,26 @@
-# FreeSafeAuth Personal v1.0.2
+# FreeSafeAuth Personal v1.0.3
 
 ## English
 
-Screenshot permission and backup password input improvements.
+**No ads, no analytics, no login, and no server.**
 
-No ads, no analytics, no login, no server. FreeSafeAuth Personal remains a local-only TOTP authenticator for personal use.
-
-- Added one-time screenshot permission flow: screenshots stay blocked by default, and biometric authentication is required before allowing a temporary screenshot window.
-- Fixed a possible startup crash related to Android screenshot detection permission.
-- Backup import and export password dialogs now focus the password field and open the keyboard automatically.
-- Keeps the green security UI theme, local encrypted storage, encrypted backup, import preview, duplicate detection, biometric unlock, screenshot protection, and multi-language support.
+- Clarified the Chinese label for the one-time screenshot button. Biometric verification is unchanged.
+- Changing the app language updates the interface immediately. The settings row is always labeled `Language`.
 
 ## 中文
 
-截屏授权与备份密码输入体验优化。
+**无广告、无统计、无需登录、无服务器。**
 
-无广告、无统计、无登录、无服务器。FreeSafeAuth Personal 仍然是面向个人使用的本地 TOTP 验证码工具。
-
-- 新增一次性截屏授权流程：默认仍禁止截屏，需要通过生物识别后才临时允许截屏。
-- 修复 Android 截屏检测权限相关的潜在启动崩溃。
-- 导入和导出备份时，密码输入框会自动聚焦并拉起键盘。
-- 继续保留绿色安全主题、本地加密存储、加密备份、导入预览、重复检测、生物识别解锁、防截屏和多语言支持。
+- 顶部按钮的中文改为「允许截屏一次」，生物识别验证流程不变。
+- 切换语言后界面立即刷新，无需退出设置页；语言设置项始终显示为 `Language`。
 
 ## 한국어
 
-스크린샷 허용 및 백업 비밀번호 입력 경험 개선 버전입니다.
+**광고 없음, 통계 수집 없음, 로그인 없음, 서버 없음.**
 
-광고 없음, 통계 없음, 로그인 없음, 서버 없음. FreeSafeAuth Personal은 계속 개인 사용을 위한 로컬 전용 TOTP 인증 앱입니다.
-
-- 1회 스크린샷 허용 흐름을 추가했습니다. 기본적으로 스크린샷은 차단되며, 생체 인증 후에만 임시로 허용됩니다.
-- Android 스크린샷 감지 권한과 관련된 잠재적인 시작 오류를 수정했습니다.
-- 백업 가져오기와 내보내기 비밀번호 창에서 비밀번호 입력칸에 자동 포커스되고 키보드가 열립니다.
-- 녹색 보안 UI 테마, 로컬 암호화 저장, 암호화 백업, 가져오기 미리보기, 중복 감지, 생체 인식 잠금 해제, 화면 캡처 방지, 다국어 지원을 계속 포함합니다.
+- 중국어 화면에서 1회 스크린샷 허용 버튼의 문구를 더 명확하게 바꿨습니다. 생체 인증 방식은 그대로입니다.
+- 앱 언어를 변경하면 화면에 즉시 반영됩니다. 설정의 언어 항목은 항상 `Language`로 표시됩니다.
 
 ## APK
 
-This release contains a debug APK for testing. For production installation and distribution, build a signed release APK/AAB.
+This release includes a debug APK for testing.

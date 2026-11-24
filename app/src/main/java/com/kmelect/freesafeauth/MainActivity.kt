@@ -138,6 +138,8 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE)
+        AppLanguage.current = getSharedPreferences("settings", Context.MODE_PRIVATE)
+            .getString("appLanguage", "system").orEmpty().ifBlank { "system" }
         setContent { FreeSafeAuthApp() }
     }
 }
@@ -188,17 +190,20 @@ private val FreeSafeDarkColors = darkColorScheme(
 )
 
 object AppLanguage {
-    var current: String = "system"
+    // 让读取翻译的 Compose 界面在语言改变时自动刷新。
+    var current: String by mutableStateOf("system")
 }
 
-fun t(zh: String, en: String, ja: String, ko: String): String =
-    when ((if (AppLanguage.current == "system") Locale.getDefault().language else AppLanguage.current).lowercase(Locale.US)) {
+fun t(zh: String, en: String, ja: String, ko: String): String {
+    val selected = AppLanguage.current
+    return when ((if (selected == "system") Locale.getDefault().language else selected).lowercase(Locale.US)) {
         "zh" -> zh
         "en" -> en
         "ja" -> ja
         "ko" -> ko
         else -> zh
     }
+}
 
 fun languageLabel(code: String): String = when (code) {
     "zh" -> "中文"
@@ -458,8 +463,6 @@ fun FreeSafeAuthApp() {
     var autoLockEnabled by remember { mutableStateOf(prefs.getBoolean("autoLockEnabled", false)) }
     var autoLockSeconds by remember { mutableStateOf(prefs.getInt("autoLockSeconds", 0)) }
     var darkMode by remember { mutableStateOf(prefs.getBoolean("darkMode", false)) }
-    var appLanguage by remember { mutableStateOf(prefs.getString("appLanguage", "system").orEmpty()) }
-    AppLanguage.current = appLanguage.ifBlank { "system" }
     val biometricAvailable = remember {
         BiometricManager.from(context).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK) ==
             BiometricManager.BIOMETRIC_SUCCESS
@@ -752,9 +755,8 @@ fun FreeSafeAuthApp() {
                         darkMode = it
                         prefs.edit().putBoolean("darkMode", it).apply()
                     },
-                    appLanguage = appLanguage,
+                    appLanguage = AppLanguage.current,
                     onAppLanguageChange = {
-                        appLanguage = it
                         AppLanguage.current = it
                         prefs.edit().putString("appLanguage", it).apply()
                     },
@@ -902,7 +904,7 @@ fun HomeScreen(
                 title = { Text("FreeSafeAuth", fontWeight = FontWeight.Bold) },
                 actions = {
                     TextButton(onClick = onAllowScreenshot, enabled = !screenshotUnlockActive) {
-                        Text(if (screenshotUnlockActive) t("已解锁", "Unlocked", "解除中", "허용됨") else t("截屏一次", "One shot", "1回撮影", "1회 캡처"))
+                        Text(if (screenshotUnlockActive) t("已解锁", "Unlocked", "解除中", "허용됨") else t("允许截屏一次", "One shot", "1回撮影", "1회 캡처"))
                     }
                     TextButton(onClick = onSettings) { Text(t("设置", "Settings", "設定", "설정")) }
                 },
@@ -1488,7 +1490,7 @@ fun SettingsScreen(
                     Switch(checked = darkMode, onCheckedChange = onDarkModeChange)
                 }
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(t("语言", "Language", "言語", "언어"))
+                    Text("Language")
                     OutlinedButton(onClick = { showLanguageDialog = true }) {
                         Text(languageLabel(appLanguage))
                     }
